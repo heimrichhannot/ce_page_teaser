@@ -1,5 +1,5 @@
 {
-    "name": "heimrichhannot/contao-ce_page_teaser,
+    "name": "heimrichhannot/contao-ce_page_teaser",
     "description":"Page teaser content element for contao.",
     "keywords":["contao", "content", "ce", "page", "teaser"],
     "type": "contao-module",
