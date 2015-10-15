@@ -98,17 +98,17 @@ class PageTeaser extends ContentElement
 		}
 		else
 		{
-			$objArticle = $this->Database->prepare("SELECT `pid` FROM `tl_article` WHERE `id`=?")->execute($this->pid);
+			$objArticle = \ArticleModel::findByPk($this->pid);
 
-			if ($objArticle->next())
+			if ($objArticle !== null)
 			{
-				$objPage = $this->Database->prepare("SELECT * FROM `tl_page` WHERE `id`=?")->execute($objArticle->pid)->next();
+				$objPage = \PageModel::findByPk($objArticle->pid);
 			}	
 		}
 
 		$rootPage = $this->getRootPage($objPage->id);
 		
-		if (TL_MODE == 'BE' && !defined('EX_TL_MODE_FE'))
+		if (TL_MODE == 'BE' && !defined('EX_TL_MODE_FE') && $objPage !== null)
 		{
 			$objPage->domain = $rootPage['dns'];
 			$objPage->rootLanguage = $rootPage['language'];
@@ -238,14 +238,11 @@ class PageTeaser extends ContentElement
 		// Get all pages up to the root page
 		do
 		{
-			$objPages = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")
-									   ->limit(1)
-									   ->execute($pageId);
-
+			$objPages = \PageModel::findByPk($pageId);
 			$type = $objPages->type;
 			$pageId = $objPages->pid;
 		}
-		while ($objPages->numRows && $pageId > 0 && $type != 'root');
+		while ($objPages !== null && $pageId > 0 && $type != 'root');
 
 		if ($type == 'root')
 		{
