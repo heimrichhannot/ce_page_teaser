@@ -1,3 +1,5 @@
+@abandoned - use heimrichhannot/contao-teaser instead.
+
 Seitenteaser
 ============
 
